@@ -21,8 +21,9 @@ Source:
 https://www.kaggle.com/datasets/vladtasca/wikipedia-pageviews
 
 This dataset tracks the **100 most popular Wikipedia articles by daily pageviews**, 
-enabling analysis of trending and consistently popular topics on Wikipedia over time.
-
+enabling analysis of trending and consistently popular topics on Wikipedia over time.  
+The project uses pageview data spanning from 2016-01-01 to 2026, with a total of 365,700 records (approximately 13.9 MB).
+The data is processed using Apache Spark, partitioned into ~4 Spark partitions to support scalable and efficient distributed processing.
 Fields include:
 - `article` – Title of the Wikipedia article  
 - `date` – Date of the pageview record  
@@ -35,6 +36,9 @@ https://www.kaggle.com/datasets/wikimedia-foundation/wikipedia-structured-conten
 
 This dataset provides **pre-parsed, structured representations of Wikipedia articles**, including both metadata and 
 textual content. Only the **English Wikipedia (`enwiki_namespace_0`)** subset is used in this project.
+At the time of recording, the Wikipedia structured contents namespace consists of 38 JSONL files, occupying 79.57 GB of disk space.
+The dataset contains 7,405,030 records, processed across 593 Spark partitions.
+The scale of this dataset is substantial and clearly justifies the use of Apache Spark for distributed ingestion and transformation.   
 Fields used in this project, include:
 - `name` – Title of the article  
 - `url` – Canonical Wikipedia URL  
@@ -78,12 +82,14 @@ of individual pipeline steps during development.
 ### 1. Extract Phase (`src/extract.py`)
 - Ingests large CSV and JSONL files using PySpark
 - Supports single files and directories
+- Both the pageviews and the articles data are read into Pyspark dataframes
 
 ### 2. Transform Phase (`src/transform.py`)
-- Cleans and standardises article names
-- Removes invalid and corrupt records
-- Deduplicates article metadata
-- Joins pageviews with article metadata
+- Cleans and standardises article names (`article` in pageviews data and `name` in pageviews data) 
+under `article_name` column
+- Removes invalid and corrupt records from both dataframes
+- Deduplicates the articles data dataframe
+- Joins the pageviews df and the huge articles data df with the cleaned `article_name` column
 - Creates analytical features such as:
   - popularity buckets
   - aggregated statistics per article
