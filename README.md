@@ -152,16 +152,22 @@ The project exposes analytical insights and article data via **FastAPI** APIs.
 
 1. Install all prerequisites mentioned in the **Tech Stack** section.
 
+
 2. Download the respective datasets from the links provided in the **Data** section above.
+
 
 3. Update all the variables in `config.py` accordingly. 
 
+
 4. Run the ETL pipeline to process and load the data, `python pipeline.py`.
+
 
 5. Verify that data has been loaded successfully.  
 Optionally, You can use MongoDB Compass for  
-MongoDB and pgAdmin4 for PostgreSQL inspection respectively.
+MongoDB and pgAdmin4 for PostgreSQL inspection.
+
 
 6. Start the FastAPI server on localhost using, `uvicorn API.app:app` command in the terminal.
    
+
 7. Optionally, Open Swagger UI to explore and test the available API endpoints using the `http://127.0.0.1:8000/docs` endpoint.
