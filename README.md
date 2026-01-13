@@ -4,12 +4,13 @@ End-to-end ETL pipeline for large scale linguistic, text data using PySpark, Mon
 ## Overview
 
 **TextETLPipeline** is an end-to-end Data Engineering project that builds a scalable ETL pipeline over 
-large scale Wikipedia data and exposes analytical insights through a FastAPI based REST API.
+large scale Wikipedia text data and exposes analytical insights through FastAPI-based REST APIs.
 
 The project focuses on:
-- Processing and cleaning large textual and time-series datasets using **PySpark**
-- Storing data using both NoSQL and SQL based Databases (MongoDB + PostgreSQL)
-- Designing analytical queries for understanding Wikipedia content popularity
+- Processing and cleaning large textual and time-series datasets using **Apache Spark**
+integrated with **Python** through **PySpark**.
+- Storing processed data using both **NoSQL** and **Relational** Databases (**MongoDB** + **PostgreSQL**)
+- Designing and executing analytical queries using **SQL**
 - Exposing insights via **FastAPI** with interactive Swagger documentation
 
 ## Data
