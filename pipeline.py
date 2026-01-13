@@ -1,8 +1,8 @@
 import random
 from pyspark.sql import SparkSession
-from config import (DATA_PATH, MONGO_DB_NAME, MONGO_COLLECTION_NAME, MONGO_URI,
-                    BATCH_SIZE, POSTGRES_DB_CONFIG, POSTGRES_MAIN_TABLE_NAME,
-                    POSTGRES_ANALYTICS_TABLE_NAME)
+from config import (DATA_PATH, PAGEVIEWS_FILENAME, WIKI_NAMESPACE, MONGO_DB_NAME,
+                    MONGO_COLLECTION_NAME, MONGO_URI, BATCH_SIZE,
+                    POSTGRES_DB_CONFIG, POSTGRES_MAIN_TABLE_NAME, POSTGRES_ANALYTICS_TABLE_NAME)
 from src.extract import ingest_data
 from src.transform import basic_preprocessing, deduplicate_df, df_join, groupby_expr, add_column
 from src.load_mongo import upload_to_mongo
@@ -10,14 +10,14 @@ from src.load_postgresql import load_to_postgres
 
 # -- EXTRACT PHASE --
 spark = SparkSession.builder.getOrCreate()
-pageviews_data = ingest_data(spark, f"{DATA_PATH}/pageviews.csv", filetype="csv")
+pageviews_data = ingest_data(spark, f"{DATA_PATH}/{PAGEVIEWS_FILENAME}", filetype="csv")
 print(f"Pageviews data row count: {pageviews_data.count()}")
 pageviews_data.printSchema()
 # sample of pageviews data
 pageviews_data.show(5, truncate=False)
 print(f"Number of Spark partitions in pageviews data: {pageviews_data.rdd.getNumPartitions()}")
 
-articles_data = ingest_data(spark, f"{DATA_PATH}/enwiki_namespace_0", filetype="jsonl")
+articles_data = ingest_data(spark, f"{DATA_PATH}/{WIKI_NAMESPACE}", filetype="jsonl")
 print(f"Articles' data row count: {articles_data.count()}")
 articles_data.printSchema()
 # sample of articles data

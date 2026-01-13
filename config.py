@@ -1,5 +1,10 @@
 # Important Variables
 DATA_PATH = "your_data_path"
+# filename for wikipedia pageviews
+PAGEVIEWS_FILENAME = "pageviews.csv"
+
+# directory folder name for wikipedia articles data
+WIKI_NAMESPACE = "enwiki_namespace_0"
 
 MONGO_DB_NAME="your_mongo_db_name"
 
